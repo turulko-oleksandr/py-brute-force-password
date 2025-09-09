@@ -44,7 +44,8 @@ def brute_force_password() -> None:
     for i in range(num_processes):
         start = i * chunk_size
         end = (i + 1) * chunk_size if i < num_processes - 1 else 100_000_000
-        p = multiprocessing.Process(target=worker, args=(start, end, PASSWORDS_TO_BRUTE_FORCE, result_queue))
+        targets_set = set(PASSWORDS_TO_BRUTE_FORCE)
+        p = multiprocessing.Process(target=worker, args=(start, end, targets_set, result_queue))
         processes.append(p)
         p.start()
 
